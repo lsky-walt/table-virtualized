@@ -1,25 +1,13 @@
-
 const path = require('path')
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-
 
 module.exports = {
-  entry: {
-    index: [path.resolve(__dirname, "../src/index.js")]
-  },
-  output: {
-    filename: '[name].[chunkhash].bundle.js',
-    path:  path.resolve(__dirname, '../dist'),
-    chunkFilename: '[name].[chunkhash].chunk.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['.', '.ts', '.tsx', '.js', '.jsx', '.json'],
-  },
   externals: {
     react: 'window.React',
     'react-dom': 'window.ReactDOM',
-    'prop-types': 'window.PropTypes',
+  },
+  resolve: {
+    extensions: ['.', '.js', '.jsx', '.json'],
+    modules: [path.resolve(__dirname, '../src')],
   },
   module: {
     rules: [
@@ -27,8 +15,8 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.ejs$/,
@@ -36,9 +24,9 @@ module.exports = {
           {
             loader: 'ejs-loader',
             options: {
-              esModule: false
-            }
-          }
+              esModule: false,
+            },
+          },
         ],
       },
       {
@@ -74,13 +62,7 @@ module.exports = {
             loader: 'less-loader',
           },
         ],
-      }
-    ]
+      },
+    ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, "../index.ejs"),
-      filename: path.resolve(__dirname, '../dist/index.html')
-    })
-  ]
-};
+}
