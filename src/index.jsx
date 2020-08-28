@@ -1,8 +1,4 @@
 import React from 'react'
-import Test from './components/test'
+import Table from './components/table'
 
-const App = () => (
-  <Test />
-)
-
-export default App
+export default Table
