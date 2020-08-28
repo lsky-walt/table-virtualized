@@ -7,7 +7,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.', '.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, '../src')],
+    alias: {
+      src: path.resolve(__dirname, '../src'),
+    },
   },
   module: {
     rules: [

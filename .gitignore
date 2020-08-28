@@ -3,6 +3,7 @@ node_modules
 
 # bound
 dist/
+lib/
 
 # lock
 yarn.lock

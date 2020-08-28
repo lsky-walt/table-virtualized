@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from './style.less'
+import styles from 'src/style.less'
 
 export default function Test() {
   return (
-    <div className={styles['test']}>
+    <div className={styles.test}>
       Webpack test
     </div>
   )
