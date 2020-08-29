@@ -86,6 +86,8 @@ class Index extends React.Component {
       position: 'relative',
     }
 
+    tableConfig.calcRange(this.state)
+
     return (
       <div
         ref={this.bindContainer}
