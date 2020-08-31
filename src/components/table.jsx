@@ -10,37 +10,42 @@ import styles from 'src/style.less'
 class Index extends React.Component {
   constructor(props) {
     super(props)
+    this.bindContainer = this.bindContainer.bind(this)
+    this.onScroll = this.onScroll.bind(this)
+
+    this.updateScroll = this.updateScroll.bind(this)
+
     const { scrollLeft, scrollTop } = props
+    const instance = new TableConfig(props)
+
+    // set scroll callback
+    instance.setScrollCallback(this.onScroll)
+
     this.state = {
-      tableConfig: new TableConfig(props),
+      tableConfig: instance,
       scrollTop,
       scrollLeft,
     }
-
-    this.bindContainer = this.bindContainer.bind(this)
-    this.onScroll = throttle(this.onScroll.bind(this), 16)
-
-    this.updateScroll = this.updateScroll.bind(this)
   }
 
   componentDidMount() {
-    if (this.container) {
-      this.container.addEventListener('scroll', this.onScroll)
-    }
+    this.state.tableConfig.registerScrollListener(this.container)
   }
 
   componentDidUpdate(prevProps) {
-    const { scrollLeft, scrollTop } = this.state
-    // if (this.container.scrollLeft !== scrollLeft) {
-    //   this.container.scrollLeft = scrollLeft
-    // }
-    // if (this.container.scrollTop !== scrollTop) {
-    //   this.container.scrollTop = scrollTop
-    // }
+    const { onScroll, scrollLeft, scrollTop } = this.props
+    const { scrollLeft: slt, scrollTop: slp } = this.state
+    if (isFunc(onScroll)) onScroll({ scrollLeft: slt, scrollTop: slp })
+
+    // distinguish between controlled and uncontrolled
+    if ((isNumber(scrollLeft) && scrollLeft !== prevProps.scrollLeft)
+      || (isNumber(scrollTop) && scrollTop !== prevProps.scrollTop)) {
+      this.updateScroll({ scrollLeft, scrollTop, controll: true })
+    }
   }
 
   componentWillUnmount() {
-    this.container.removeEventListener('scroll', this.onScroll)
+    this.state.tableConfig.unregisterScrollListener(this.container)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -60,7 +65,7 @@ class Index extends React.Component {
     this.updateScroll({ scrollLeft, scrollTop })
   }
 
-  updateScroll({ scrollLeft, scrollTop }) {
+  updateScroll({ scrollLeft, scrollTop, controll }) {
     this.setState({
       scrollTop,
       scrollLeft,
@@ -72,7 +77,16 @@ class Index extends React.Component {
   }
 
   calcRenderChildren() {
-    // const {scrollTop, scrollLeft, tableConfig} = this.props
+    const { render } = this.props
+    const { tableConfig } = this.state
+    if (!isFunc(render)) return null
+    const range = tableConfig.calcRange(this.state)
+    return range.map((value) => render({
+      columnIndex: value[0],
+      rowIndex: value[1],
+      style: value[2],
+      key: value[3],
+    }))
   }
 
   render() {
@@ -86,8 +100,6 @@ class Index extends React.Component {
       position: 'relative',
     }
 
-    tableConfig.calcRange(this.state)
-
     return (
       <div
         ref={this.bindContainer}
@@ -97,7 +109,7 @@ class Index extends React.Component {
           width, height,
         }}
       >
-        <div style={innerContainerStyle} />
+        <div style={innerContainerStyle}>{this.calcRenderChildren()}</div>
       </div>
     )
   }
@@ -112,6 +124,8 @@ Index.propTypes = {
   height: PropTypes.number,
   scrollTop: PropTypes.number,
   scrollLeft: PropTypes.number,
+  render: PropTypes.func,
+  onScroll: PropTypes.func,
 }
 
 export default Index

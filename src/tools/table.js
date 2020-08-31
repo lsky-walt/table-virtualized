@@ -1,3 +1,4 @@
+import throttle from 'lodash.throttle'
 import { isFunc, isNumber } from './is'
 
 const row = 'row'
@@ -104,8 +105,6 @@ class TableConfig {
       left += w
       return acc
     }, this.size)
-
-    console.log('render')
   }
 
   /**
@@ -154,17 +153,32 @@ class TableConfig {
     return false
   }
 
-  // calcRenderCount() {
-  //   const {width, height, rowHeight, columnWidth} = this.config
+  makeUp(arr, max) {
+    const { overRenderCount = defaultOverRender } = this.config
+    const min = arr[0]
+    // front
+    let makeUp = min - 1 // index
+    while (makeUp >= 0 && (min - makeUp) <= overRenderCount) {
+      arr.unshift(makeUp)
+      makeUp -= 1
+    }
 
-  // }
+    // end
+    const last = arr[arr.length - 1]
+    makeUp = last + 1
+    while (makeUp <= max && (makeUp - last <= (overRenderCount))) {
+      arr.push(makeUp)
+      makeUp += 1
+    }
+  }
 
   calcRange({
     scrollTop = 0,
     scrollLeft = 0,
   }) {
-    const { column: co, row: ro } = this.totalSize
-    const { width, height } = this.config
+    const {
+      width, height, columnCount, rowCount,
+    } = this.config
     // column + defaultOverRender * 2
     // row + defaultOverRender * 2
     const res = []
@@ -198,13 +212,36 @@ class TableConfig {
       return true
     })
 
+    // make up
+    this.makeUp(colr, columnCount)
+    this.makeUp(rowr, rowCount)
+
     colr.forEach((i) => {
       rowr.forEach((n) => {
-        res.push(this.size.get(`${i}-${n}`))
+        const style = this.size.get(`${i}-${n}`)
+        res.push([i, n, { ...style, position: 'absolute' }, `${i}-${n}`])
       })
     })
 
-    console.log(res)
+    return res
+  }
+
+  setScrollCallback(fun = () => {}) {
+    this.scrollCallback = fun
+  }
+
+  registerScrollListener(dom) {
+    const { scrollTop, scrollLeft } = this.config
+    if (dom && !isNumber(scrollTop) && !isNumber(scrollLeft)) {
+      dom.addEventListener('scroll', throttle(this.scrollCallback, 16))
+    }
+  }
+
+  unregisterScrollListener(dom) {
+    const { scrollTop, scrollLeft } = this.config
+    if (dom && !isNumber(scrollTop) && !isNumber(scrollLeft)) {
+      dom.removeEventListener('scroll', throttle(this.scrollCallback, 16))
+    }
   }
 
   init() {
