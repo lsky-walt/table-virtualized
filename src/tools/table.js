@@ -4,7 +4,7 @@ import { isFunc, isNumber } from './is'
 const row = 'row'
 const column = 'column'
 
-const defaultOverRender = 5
+const defaultOverRender = 2
 
 class TableConfig {
   constructor(config) {
@@ -216,11 +216,12 @@ class TableConfig {
     this.makeUp(colr, columnCount)
     this.makeUp(rowr, rowCount)
 
-    colr.forEach((i) => {
-      rowr.forEach((n) => {
-        const style = this.size.get(`${i}-${n}`)
-        res.push([i, n, { ...style, position: 'absolute' }, `${i}-${n}`])
+    rowr.forEach((i) => {
+      const ro = colr.map((n) => {
+        const style = this.size.get(`${n}-${i}`)
+        return [n, { ...style, position: 'absolute' }, `${n}-${i}`]
       })
+      res.push([i, ro, { height: ro[0][1].height }])
     })
 
     return res

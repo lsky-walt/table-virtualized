@@ -81,12 +81,20 @@ class Index extends React.Component {
     const { tableConfig } = this.state
     if (!isFunc(render)) return null
     const range = tableConfig.calcRange(this.state)
-    return range.map((value) => render({
-      columnIndex: value[0],
-      rowIndex: value[1],
-      style: value[2],
-      key: value[3],
-    }))
+    return range.map((value) => {
+      const [rowIndex, children, style] = value
+      if (!children || children.length < 1) return <div key={`row-${rowIndex}`} className="row" />
+      return (
+        <div key={`row-${rowIndex}`} className="row" style={style}>
+          {children.map((cellData) => render({
+            columnIndex: cellData[0],
+            rowIndex,
+            style: cellData[1],
+            key: cellData[2],
+          }))}
+        </div>
+      )
+    })
   }
 
   render() {
