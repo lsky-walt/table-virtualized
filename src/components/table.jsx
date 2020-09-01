@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { getType, isFunc, isNumber } from 'src/tools/is'
 import { TableConfig } from 'src/tools/table'
 
-import throttle from 'lodash.throttle'
-
 import styles from 'src/style.less'
 
 class Index extends React.Component {
@@ -40,6 +38,7 @@ class Index extends React.Component {
     // distinguish between controlled and uncontrolled
     if ((isNumber(scrollLeft) && scrollLeft !== prevProps.scrollLeft)
       || (isNumber(scrollTop) && scrollTop !== prevProps.scrollTop)) {
+      // if controll, scrollTo
       this.updateScroll({ scrollLeft, scrollTop, controll: true })
     }
   }
@@ -66,6 +65,13 @@ class Index extends React.Component {
   }
 
   updateScroll({ scrollLeft, scrollTop, controll }) {
+    const { tableConfig } = this.state
+    if (controll && tableConfig.register.length > 0) {
+      tableConfig.unregisterScrollListener(this.container)
+    }
+    if (controll) {
+      this.container.scrollTo(scrollLeft, scrollTop)
+    }
     this.setState({
       scrollTop,
       scrollLeft,

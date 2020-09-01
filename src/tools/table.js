@@ -32,6 +32,8 @@ class TableConfig {
 
     // init()
     this.init()
+
+    this.register = []
   }
 
   static getTargetKey(target, prefix = false) {
@@ -153,6 +155,7 @@ class TableConfig {
     return false
   }
 
+  // make up range with overRenderCount
   makeUp(arr, max) {
     const { overRenderCount = defaultOverRender } = this.config
     const min = arr[0]
@@ -179,8 +182,6 @@ class TableConfig {
     const {
       width, height, columnCount, rowCount,
     } = this.config
-    // column + defaultOverRender * 2
-    // row + defaultOverRender * 2
     const res = []
     const colr = []
     const rowr = []
@@ -221,7 +222,7 @@ class TableConfig {
         const style = this.size.get(`${n}-${i}`)
         return [n, { ...style, position: 'absolute' }, `${n}-${i}`]
       })
-      res.push([i, ro, { height: ro[0][1].height }])
+      res.push([i, ro, { height: this.getTargetNum(row, i) }])
     })
 
     return res
@@ -236,6 +237,8 @@ class TableConfig {
     if (dom && !isNumber(scrollTop) && !isNumber(scrollLeft)) {
       dom.addEventListener('scroll', throttle(this.scrollCallback, 16))
     }
+    // cache dom
+    this.register.push(dom)
   }
 
   unregisterScrollListener(dom) {
@@ -243,6 +246,8 @@ class TableConfig {
     if (dom && !isNumber(scrollTop) && !isNumber(scrollLeft)) {
       dom.removeEventListener('scroll', throttle(this.scrollCallback, 16))
     }
+    // remove dom
+    this.register = this.register.filter((d) => (d !== dom))
   }
 
   init() {

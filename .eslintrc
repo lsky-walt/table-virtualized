@@ -43,6 +43,7 @@
     "react/static-property-placement": 0,
     "react/jsx-props-no-spreading": 0,
     "react/require-default-props": 0,
+    "react/no-unused-prop-types": 0,
     "semi": [
       2,
       "never"
