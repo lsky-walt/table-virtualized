@@ -144,12 +144,14 @@ class TableConfig {
  */
   determineNeedToUpdate(nextConfig) {
     const {
-      rowCount, columnCount, rowHeight, columnWidth,
+      rowCount, columnCount, rowHeight, columnWidth, width, height,
     } = nextConfig
     if (rowCount !== this.config.rowCount
       || columnCount !== this.config.columnCount
       || rowHeight !== this.config.rowHeight
-      || columnWidth !== this.config.columnWidth) {
+      || columnWidth !== this.config.columnWidth
+      || width !== this.config.width
+      || height !== this.config.height) {
       return true
     }
     return false
@@ -248,6 +250,26 @@ class TableConfig {
     }
     // remove dom
     this.register = this.register.filter((d) => (d !== dom))
+  }
+
+  // get container style
+  getContainerStyle() {
+    const {
+      width, height, autoHeight, autoWidth,
+    } = this.config
+    const style = {
+      width,
+      height,
+    }
+    if (autoWidth) {
+      style.width = this.getColumnTotalSize()
+    }
+
+    if (autoHeight) {
+      style.height = this.getRowTotalSize()
+    }
+
+    return style
   }
 
   init() {

@@ -1,4 +1,11 @@
 import React from 'react'
-import Table from './components/table'
+import VTable from './components/table'
+import Adaptive from './components/adaptive'
+import WindowScroller from './components/window-scroller'
 
-export default Table
+export {
+  Adaptive,
+  WindowScroller,
+}
+
+export default VTable

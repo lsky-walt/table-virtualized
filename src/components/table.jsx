@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getType, isFunc, isNumber } from 'src/tools/is'
+import { isFunc, isNumber } from 'src/tools/is'
 import { TableConfig } from 'src/tools/table'
 
 import styles from 'src/style.less'
@@ -104,7 +104,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { width, height } = this.props
+    const { autoHeight, autoWidth } = this.props
     const { tableConfig } = this.state
 
     // inner container style
@@ -114,14 +114,21 @@ class Index extends React.Component {
       position: 'relative',
     }
 
+    let className = `${styles['table-container']}`
+    if (!autoHeight) {
+      className += ` ${styles['table-container-scroll-y']}`
+    }
+
+    if (!autoWidth) {
+      className += ` ${styles['table-container-scroll-x']}`
+    }
+
     return (
       <div
         ref={this.bindContainer}
-        onScroll={this.onScroll}
-        className={styles['table-container']}
-        style={{
-          width, height,
-        }}
+        // onScroll={this.onScroll}
+        className={className}
+        style={tableConfig.getContainerStyle()}
       >
         <div style={innerContainerStyle}>{this.calcRenderChildren()}</div>
       </div>
@@ -130,16 +137,61 @@ class Index extends React.Component {
 }
 
 Index.propTypes = {
+  /**
+   * column width
+   */
   columnWidth: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.func,
-  ]),
-  width: PropTypes.number,
-  height: PropTypes.number,
+  ]).isRequired,
+  /**
+   * column count
+   */
+  columnCount: PropTypes.number.isRequired,
+  /**
+   * row height
+   */
+  rowHeight: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.func,
+  ]).isRequired,
+  /**
+   * row count
+   */
+  rowCount: PropTypes.number.isRequired,
+  /**
+   * container width
+   */
+  width: PropTypes.number.isRequired,
+  /**
+   * container height
+   */
+  height: PropTypes.number.isRequired,
+  /**
+   * table scrolltop
+   */
   scrollTop: PropTypes.number,
+  /**
+   * table scrollleft
+   */
   scrollLeft: PropTypes.number,
-  render: PropTypes.func,
+  /**
+   * cell render
+   */
+  render: PropTypes.func.isRequired,
+  /**
+   * scroll callback
+   * ({scrollTop, scrollLeft}) => void
+   */
   onScroll: PropTypes.func,
+  /**
+   * auto height
+   */
+  autoHeight: PropTypes.bool,
+  /**
+   * auto width
+   */
+  autoWidth: PropTypes.bool,
 }
 
 export default Index
