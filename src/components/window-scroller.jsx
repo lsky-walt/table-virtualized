@@ -21,6 +21,8 @@ class Index extends React.Component {
 
   componentDidMount() {
     const { scrollElement } = this.props
+
+    // wait children render
     Promise.resolve().then(() => {
       this.updatePosition()
     })
@@ -66,7 +68,7 @@ class Index extends React.Component {
     const { children } = this.props
     const { scrollTop, scrollLeft } = this.state
     return (
-      <div className={`window-scroller ${styles['window-scroller'] || ''}`} ref={this.bindRef}>
+      <div className={`vTable-window-scroller ${styles['window-scroller'] || ''}`} ref={this.bindRef}>
         {children({
           scrollTop,
           scrollLeft,

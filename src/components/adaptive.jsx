@@ -64,8 +64,8 @@ class Index extends React.Component {
 
     return (
       <>
-        <div className={styles['adaptive-container']}>
-          <iframe title="adaptive-dom" className={styles['adaptive-dom']} ref={this.bindRef} />
+        <div className={`vTable-adaptive ${styles['adaptive-container']}`}>
+          <iframe title="adaptive-dom" className={`vTable-dom ${styles['adaptive-dom']}`} ref={this.bindRef} />
         </div>
         {children({ width, height })}
       </>

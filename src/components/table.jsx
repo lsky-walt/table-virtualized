@@ -91,7 +91,7 @@ class Index extends React.Component {
       const [rowIndex, children, style] = value
       if (!children || children.length < 1) return <div key={`row-${rowIndex}`} className="row" />
       return (
-        <div key={`row-${rowIndex}`} className="row" style={style}>
+        <div key={`row-${rowIndex}`} className="vTable-row" style={style}>
           {children.map((cellData) => render({
             columnIndex: cellData[0],
             rowIndex,
@@ -114,7 +114,7 @@ class Index extends React.Component {
       position: 'relative',
     }
 
-    let className = `${styles['table-container']}`
+    let className = `vTable-containner ${styles['table-container']}`
     if (!autoHeight) {
       className += ` ${styles['table-container-scroll-y']}`
     }
@@ -130,7 +130,7 @@ class Index extends React.Component {
         className={className}
         style={tableConfig.getContainerStyle()}
       >
-        <div style={innerContainerStyle}>{this.calcRenderChildren()}</div>
+        <div className="vTable-inner" style={innerContainerStyle}>{this.calcRenderChildren()}</div>
       </div>
     )
   }
