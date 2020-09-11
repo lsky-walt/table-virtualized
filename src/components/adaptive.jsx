@@ -78,8 +78,6 @@ class Index extends React.Component {
 Index.propTypes = {
   defaultWidth: PropTypes.number,
   defaultHeight: PropTypes.number,
-  disabledWidth: PropTypes.bool,
-  disabledHeight: PropTypes.bool,
   children: PropTypes.func,
 }
 

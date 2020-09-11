@@ -56,7 +56,7 @@ class TableConfig {
 
   calcTarget(target, index) {
     const t = this.config[TableConfig.getTargetKey(target, true)]
-    if (isFunc(t)) return t[index] || 0
+    if (isFunc(t)) return t(index) || 0
     if (isNumber(t)) return t
     return 0
   }
