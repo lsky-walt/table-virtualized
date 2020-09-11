@@ -191,11 +191,12 @@ class TableConfig {
     let rowh = 0
 
     this.column.every((v, index) => {
-      if (colw > (scrollLeft + width)) {
+      const diff = colw - scrollLeft
+      if (diff > width) {
         return false
       }
 
-      if (colw >= scrollLeft) {
+      if (diff >= 0) {
         colr.push(index)
       }
       colw += v
@@ -203,11 +204,12 @@ class TableConfig {
     })
 
     this.row.every((v, index) => {
-      if (rowh > (scrollTop + height)) {
+      const diff = rowh - scrollTop
+      if (diff > height) {
         return false
       }
 
-      if (rowh >= scrollTop) {
+      if (diff >= 0) {
         rowr.push(index)
       }
 

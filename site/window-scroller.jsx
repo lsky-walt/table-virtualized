@@ -19,6 +19,9 @@ class Index extends React.PureComponent {
         columnCount={100}
         rowCount={1000}
         render={this.tableRender}
+        onScroll={({ scrollTop, scrollLeft }) => {
+          console.log(`scrollTop: ${scrollTop}, scrollLeft: ${scrollLeft}`)
+        }}
       />
     )
   }

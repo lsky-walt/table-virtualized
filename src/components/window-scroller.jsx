@@ -60,12 +60,12 @@ class Index extends React.Component {
     if (scrollElement) {
       newState = {
         scrollTop: this.checkNumber(scrollElement.scrollTop),
-        scrollLeft: this.checkNumber(scrollElement.scrollLeft),
+        scrollLeft: this.checkNumber(scrollElement.scrollLeft, 'left'),
       }
     } else {
       newState = {
         scrollTop: this.checkNumber(window.scrollY),
-        scrollLeft: this.checkNumber(window.scrollX),
+        scrollLeft: this.checkNumber(window.scrollX, 'left'),
       }
     }
 
