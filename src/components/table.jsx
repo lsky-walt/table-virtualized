@@ -104,7 +104,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { autoHeight, autoWidth } = this.props
+    const { auto } = this.props
     const { tableConfig } = this.state
 
     // inner container style
@@ -115,18 +115,14 @@ class Index extends React.Component {
     }
 
     let className = `vTable-containner ${styles['table-container']}`
-    if (!autoHeight) {
-      className += ` ${styles['table-container-scroll-y']}`
-    }
 
-    if (!autoWidth) {
-      className += ` ${styles['table-container-scroll-x']}`
+    if (!auto) {
+      className += ` ${styles['table-container-auto']}`
     }
 
     return (
       <div
         ref={this.bindContainer}
-        // onScroll={this.onScroll}
         className={className}
         style={tableConfig.getContainerStyle()}
       >
@@ -185,13 +181,10 @@ Index.propTypes = {
    */
   onScroll: PropTypes.func,
   /**
-   * auto height
+   * auto height / width,
+   * for WindowScroller
    */
-  autoHeight: PropTypes.bool,
-  /**
-   * auto width
-   */
-  autoWidth: PropTypes.bool,
+  auto: PropTypes.bool,
 }
 
 export default Index

@@ -255,17 +255,14 @@ class TableConfig {
   // get container style
   getContainerStyle() {
     const {
-      width, height, autoHeight, autoWidth,
+      width, height, auto,
     } = this.config
     const style = {
       width,
       height,
     }
-    if (autoWidth) {
+    if (auto) {
       style.width = this.getColumnTotalSize()
-    }
-
-    if (autoHeight) {
       style.height = this.getRowTotalSize()
     }
 

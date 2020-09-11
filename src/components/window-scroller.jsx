@@ -14,6 +14,7 @@ class Index extends React.Component {
     }
 
     this.bindRef = this.bindRef.bind(this)
+    this.checkNumber = this.checkNumber.bind(this)
 
     this.domTop = 0
     this.domLeft = 0
@@ -42,18 +43,29 @@ class Index extends React.Component {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  checkNumber(num, mode = 'top') {
+    const map = {
+      top: num - this.domTop,
+      left: num - this.domLeft,
+    }
+
+    if (map[mode] >= 0) return map[mode]
+    return 0
+  }
+
   handleScroller() {
     const { scrollElement } = this.props
     let newState = {}
     if (scrollElement) {
       newState = {
-        scrollTop: scrollElement.scrollTop,
-        scrollLeft: scrollElement.scrollLeft,
+        scrollTop: this.checkNumber(scrollElement.scrollTop),
+        scrollLeft: this.checkNumber(scrollElement.scrollLeft),
       }
     } else {
       newState = {
-        scrollTop: window.scrollY,
-        scrollLeft: window.scrollX,
+        scrollTop: this.checkNumber(window.scrollY),
+        scrollLeft: this.checkNumber(window.scrollX),
       }
     }
 

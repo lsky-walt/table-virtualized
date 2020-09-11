@@ -14,12 +14,17 @@
   &-scroll-x {
     overflow-x: scroll;
   }
+
+  &-auto {
+    overflow: scroll;
+  }
 }
 
 .adaptive-container {
   box-sizing: border-box;
   flex: 1 0 auto;
   display: flex;
+  // position: relative;
 
   .adaptive-dom {
     box-sizing: border-box;
@@ -32,11 +37,28 @@
     z-index: -1;
     border: none;
   }
+
+  .content {
+    box-sizing: border-box;
+    overflow: visible;
+    width: 0;
+    height: 0;
+  }
 }
 
 
 .window-scroller {
-  // position: relative;
-  // display: flex;
-  // flex: 1 0 auto;
+  display: flex;
+  flex: 1 0 auto;
+}
+
+// global
+:global(.vTable-global-class-name) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  flex-wrap: wrap;
+  position: relative;
+  height: 100vh;
 }
