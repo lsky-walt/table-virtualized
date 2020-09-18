@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import throttle from 'lodash.throttle'
 import { isFunc, isNumber } from './is'
 
@@ -85,7 +86,9 @@ class TableConfig {
 
   getTotalSize() {
     // cache all size
-    const { rowCount, columnCount } = this.config
+    const {
+      rowCount, columnCount,
+    } = this.config
     const r = Array.from({ length: rowCount })
     let left = 0 // column width
 
@@ -177,18 +180,12 @@ class TableConfig {
     }
   }
 
-  calcRange({
-    scrollTop = 0,
-    scrollLeft = 0,
-  }) {
-    const {
-      width, height, columnCount, rowCount,
-    } = this.config
-    const res = []
+  calcColumnRange(scrollLeft) {
+    const { width } = this.config
     const colr = []
-    const rowr = []
     let colw = 0
-    let rowh = 0
+
+    if (!width) return colr
 
     this.column.every((v, index) => {
       const diff = colw - scrollLeft
@@ -203,6 +200,16 @@ class TableConfig {
       return true
     })
 
+    return colr
+  }
+
+  calcRowRange(scrollTop) {
+    const { height } = this.config
+    const rowr = []
+    let rowh = 0
+
+    if (!height) return rowr
+
     this.row.every((v, index) => {
       const diff = rowh - scrollTop
       if (diff > height) {
@@ -216,6 +223,19 @@ class TableConfig {
       rowh += v
       return true
     })
+    return rowr
+  }
+
+  calcRange({
+    scrollTop = 0,
+    scrollLeft = 0,
+  }) {
+    const {
+      columnCount, rowCount,
+    } = this.config
+    const res = []
+    const colr = this.calcColumnRange(scrollLeft)
+    const rowr = this.calcRowRange(scrollTop)
 
     // make up
     this.makeUp(colr, columnCount)

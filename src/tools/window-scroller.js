@@ -24,7 +24,24 @@ const unregisterScrollListener = (dom, instance) => {
   }
 }
 
+const getPostion = (current) => {
+  if (!current) return { top: 0, left: 0 }
+  const currentRect = current.getBoundingClientRect()
+  if (document.documentElement) {
+    const docRect = document.documentElement.getBoundingClientRect()
+    return {
+      top: currentRect.top - docRect.top,
+      left: currentRect.left - docRect.left,
+    }
+  }
+  return {
+    top: currentRect.top,
+    left: currentRect.left,
+  }
+}
+
 export {
   registerScrollListener,
   unregisterScrollListener,
+  getPostion,
 }
