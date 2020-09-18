@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { registerScrollListener, unregisterScrollListener } from 'src/tools/window-scroller'
+import { registerScrollListener, unregisterScrollListener, getPostion } from 'src/tools/window-scroller'
 
 import styles from 'src/style.less'
 
@@ -37,7 +37,7 @@ class Index extends React.Component {
 
   updatePosition() {
     if (this.dom) {
-      const rect = this.dom.getBoundingClientRect()
+      const rect = getPostion(this.dom)
       this.domTop = rect.top
       this.domLeft = rect.left
     }
