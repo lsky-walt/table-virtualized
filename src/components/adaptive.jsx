@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { isNumber } from 'src/tools/is'
 import throttle from 'lodash.throttle'
+import clsx from 'clsx'
 
 import styles from 'src/style.less'
 
@@ -64,9 +65,9 @@ class Index extends React.Component {
 
     return (
 
-      <div className={`vTable-adaptive ${styles['adaptive-container']}`}>
-        <iframe title="adaptive-dom" className={`vTable-dom ${styles['adaptive-dom']}`} ref={this.bindRef} />
-        <div className={`adaptive-content ${styles.content}`}>
+      <div className={clsx('vTable-adaptive', styles['adaptive-container'])}>
+        <iframe title="adaptive-dom" className={clsx('vTable-dom', styles['adaptive-dom'])} ref={this.bindRef} />
+        <div className={clsx('adaptive-content', styles.content)}>
           {children({ width, height })}
         </div>
       </div>

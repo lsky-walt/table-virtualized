@@ -26,13 +26,13 @@ class TableConfig {
     this.column = []
     this.row = []
 
+    // init()
+    this.init()
+
     this.countMap = {
       column: this.getTargetNum.bind(this, column),
       row: this.getTargetNum.bind(this, row),
     }
-
-    // init()
-    this.init()
 
     this.register = []
   }
@@ -160,6 +160,30 @@ class TableConfig {
     return false
   }
 
+  /**
+   *determine height by isWindowScroller props for calc row render
+   *
+   * @returns {number} height
+   * @memberof TableConfig
+   */
+  getHeightByWindowScroller() {
+    const { isWindowScroller, height } = this.config
+    if (isWindowScroller && height <= window.innerHeight) return window.innerHeight
+    return height
+  }
+
+  /**
+   *determine width by isWindowScroller props for calc cols render
+   *
+   * @returns {number} width
+   * @memberof TableConfig
+   */
+  getWidthByWindowScroller() {
+    const { isWindowScroller, width } = this.config
+    if (isWindowScroller && width <= window.innerWidth) return window.innerWidth
+    return width
+  }
+
   // make up range with overRenderCount
   makeUp(arr, max) {
     const { overRenderCount = defaultOverRender } = this.config
@@ -181,7 +205,8 @@ class TableConfig {
   }
 
   calcColumnRange(scrollLeft) {
-    const { width } = this.config
+    // get width from this.getWidthByWindowScroller method
+    const width = this.getWidthByWindowScroller()
     const colr = []
     let colw = 0
 
@@ -204,7 +229,8 @@ class TableConfig {
   }
 
   calcRowRange(scrollTop) {
-    const { height } = this.config
+    // get height from this.getHeightByWindowScroller method
+    const height = this.getHeightByWindowScroller()
     const rowr = []
     let rowh = 0
 
@@ -277,13 +303,13 @@ class TableConfig {
   // get container style
   getContainerStyle() {
     const {
-      width, height, auto,
+      width, height, isWindowScroller,
     } = this.config
     const style = {
       width,
       height,
     }
-    if (auto) {
+    if (isWindowScroller) {
       style.width = this.getColumnTotalSize()
       style.height = this.getRowTotalSize()
     }

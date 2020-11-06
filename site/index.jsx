@@ -13,20 +13,10 @@ class Index extends React.PureComponent {
       <div className="vTable-global-class-name">
         <h1 className={styles['test-header']}>test</h1>
         <WindowScroller />
+        {/* <Adaptive /> */}
+        {/* <Base></Base> */}
       </div>
     )
-
-    // adaptive
-    // return (
-    //   <div className="vTable-global-class-name">
-    //     <h1 className={styles['test-header']}>test</h1>
-    //     <div className={styles['adaptive-container']}>
-    //       <Adaptive />
-    //     </div>
-    //   </div>
-    // )
-
-    // return <Base />
   }
 }
 

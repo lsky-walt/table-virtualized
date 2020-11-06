@@ -33,7 +33,6 @@
 
 | attr | type | default value | required | desc |
 | --- | --- | --- | --- | --- |
-| adaptive | boolean | true | false | use Adaptive component |
 | scrollElement | dom | null | false | scroll element |
 | scrollLeft | number | null | false | scroll left |
 | scrollTop | number | null | false | scroll top |

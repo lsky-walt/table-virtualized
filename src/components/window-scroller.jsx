@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { registerScrollListener, unregisterScrollListener, getPostion } from 'src/tools/window-scroller'
-
+import clsx from 'clsx'
 import styles from 'src/style.less'
 
 class Index extends React.Component {
@@ -80,7 +80,7 @@ class Index extends React.Component {
     const { children } = this.props
     const { scrollTop, scrollLeft } = this.state
     return (
-      <div className={`vTable-window-scroller ${styles['window-scroller'] || ''}`} ref={this.bindRef}>
+      <div className={clsx('vTable-window-scroller', styles['window-scroller'])} ref={this.bindRef}>
         {children({
           scrollTop,
           scrollLeft,
@@ -91,10 +91,23 @@ class Index extends React.Component {
 }
 
 Index.propTypes = {
-  scrollElement: PropTypes.node,
   children: PropTypes.func,
+  /**
+   * scroll element
+   */
+  scrollElement: PropTypes.node,
+  /**
+   * scrollLeft,
+   * controlled
+   */
   scrollLeft: PropTypes.number,
+  /**
+   * scrollTop,
+   * controlled
+   */
   scrollTop: PropTypes.number,
 }
+
+Index.displayName = 'WindowScroller'
 
 export default Index
