@@ -35,6 +35,7 @@
     "webpack-merge": "^5.0.9"
   },
   "dependencies": {
+    "clsx": "^1.1.1",
     "lodash.throttle": "^4.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

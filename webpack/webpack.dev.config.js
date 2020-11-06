@@ -13,7 +13,6 @@ module.exports = merge({}, {
     filename: '[name].[chunkhash].bundle.js',
     path: path.resolve(__dirname, '../dist'),
     chunkFilename: '[name].[chunkhash].chunk.js',
-    // publicPath: '/'
   },
   mode: 'development',
   devtool: 'eval-source-map',
@@ -32,14 +31,6 @@ module.exports = merge({}, {
   devServer: {
     host: process.env.HOST || '0.0.0.0',
     port: process.env.PORT || 9090,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://you-awesome.api',
-    //     pathRewrite: { '^/api': '' },
-    //     secure: false,
-    //     changeOrigin: true,
-    //   },
-    // },
   },
 },
 base)

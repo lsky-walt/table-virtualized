@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { isFunc, isNumber } from 'src/tools/is'
 import { TableConfig } from 'src/tools/table'
+import clsx from 'clsx'
 
 import styles from 'src/style.less'
 
@@ -104,7 +105,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { auto } = this.props
+    const { isWindowScroller } = this.props
     const { tableConfig } = this.state
 
     // inner container style
@@ -114,11 +115,7 @@ class Index extends React.Component {
       position: 'relative',
     }
 
-    let className = `vTable-containner ${styles['table-container']}`
-
-    if (!auto) {
-      className += ` ${styles['table-container-auto']}`
-    }
+    const className = clsx('vTable-containner', styles['table-container'], !isWindowScroller && styles['table-container-auto'])
 
     return (
       <div
@@ -181,10 +178,9 @@ Index.propTypes = {
    */
   onScroll: PropTypes.func,
   /**
-   * auto height / width,
-   * for WindowScroller
+   * isWindowScroller for WindowScroller
    */
-  auto: PropTypes.bool,
+  isWindowScroller: PropTypes.bool,
 }
 
 export default Index
