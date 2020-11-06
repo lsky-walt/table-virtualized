@@ -1,5 +1,7 @@
 import React from 'react'
 import { WindowScroller } from 'src'
+import Adaptive from './adaptive'
+import Base from './base'
 
 class Index extends React.PureComponent {
   // eslint-disable-next-line class-methods-use-this
@@ -13,16 +15,12 @@ class Index extends React.PureComponent {
 
   render() {
     return (
-      <WindowScroller
-        rowHeight={40}
-        columnWidth={100}
-        columnCount={100}
-        rowCount={1000}
-        render={this.tableRender}
-        onScroll={({ scrollTop, scrollLeft }) => {
-          console.log(`scrollTop: ${scrollTop}, scrollLeft: ${scrollLeft}`)
-        }}
-      />
+      <WindowScroller>
+        {({
+          scrollLeft,
+          scrollTop,
+        }) => <Adaptive isWindowScroller scrollLeft={scrollLeft} scrollTop={scrollTop} />}
+      </WindowScroller>
     )
   }
 }
