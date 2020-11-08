@@ -1,8 +1,10 @@
 {
-  "name": "@lsky/vTable",
+  "name": "@lsky/v-table",
   "version": "0.0.1",
   "main": "./lib/index.js",
   "license": "MIT",
+  "repository": "https://github.com/lsky-walt/table-virtualized",
+  "author": "lsky_walt <lsky_walt@163.com>",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack/webpack.dev.config.js",
     "build": "webpack --config ./webpack/webpack.prod.config.js"
