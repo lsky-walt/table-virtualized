@@ -16,6 +16,10 @@ module.exports = merge({}, {
   },
   mode: 'development',
   devtool: 'eval-source-map',
+  externals: {
+    react: 'window.React',
+    'react-dom': 'window.ReactDOM',
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
