@@ -2,25 +2,31 @@ import throttle from 'lodash.throttle'
 
 let register = []
 
-const onScroll = (event) => {
+const onScroll = throttle((event) => {
   register.forEach((value) => {
     if (value[0] === event.currentTarget) {
       value[1].handleScroller()
     }
   })
-}
+}, 16)
 
-const registerScrollListener = (dom = window, instance) => {
-  dom.addEventListener('scroll', throttle(onScroll, 16))
+const registerScrollListener = (dom, instance, shortID) => {
+  if (!shortID) return
+  let d = dom
+  if (!dom) d = window
+  d.addEventListener('scroll', onScroll)
   // cache dom
-  register.push([dom, instance])
+  register.push([d, instance, shortID])
 }
 
-const unregisterScrollListener = (dom, instance) => {
-  register = register.filter((value) => value[1] !== instance)
-  const haveDom = register.filter((value) => value[0] !== dom)
+const unregisterScrollListener = (dom, shortID) => {
+  if (!shortID) return
+  let d = dom
+  if (!dom) d = window
+  register = register.filter((value) => value[2] !== shortID)
+  const haveDom = register.filter((value) => value[0] !== d)
   if (haveDom.length < 1) {
-    dom.removeEventListener('scroll', throttle(onScroll, 16))
+    d.removeEventListener('scroll', onScroll)
   }
 }
 
