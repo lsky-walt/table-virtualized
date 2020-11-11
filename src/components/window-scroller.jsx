@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { registerScrollListener, unregisterScrollListener, getPostion } from 'src/tools/window-scroller'
+import {
+  registerScrollListener, unregisterScrollListener, getPostion, reRegister,
+} from 'src/tools/window-scroller'
+import { shortID } from 'src/tools/is'
 import clsx from 'clsx'
 import styles from 'src/style.less'
 
@@ -18,6 +21,8 @@ class Index extends React.Component {
 
     this.domTop = 0
     this.domLeft = 0
+
+    this.shortID = shortID()
   }
 
   componentDidMount() {
@@ -27,12 +32,21 @@ class Index extends React.Component {
     Promise.resolve().then(() => {
       this.updatePosition()
     })
-    registerScrollListener(scrollElement, this)
+    registerScrollListener(scrollElement, this, this.shortID)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { scrollElement: prevScrollElement } = prevProps
+    const { scrollElement } = this.props
+    if (prevScrollElement !== scrollElement) {
+      unregisterScrollListener(prevScrollElement, this.shortID)
+      registerScrollListener(scrollElement, this, this.shortID)
+    }
   }
 
   componentWillUnmount() {
     const { scrollElement } = this.props
-    unregisterScrollListener(scrollElement)
+    unregisterScrollListener(scrollElement, this.shortID)
   }
 
   updatePosition() {
@@ -95,7 +109,7 @@ Index.propTypes = {
   /**
    * scroll element
    */
-  scrollElement: PropTypes.node,
+  scrollElement: PropTypes.any,
   /**
    * scrollLeft,
    * controlled

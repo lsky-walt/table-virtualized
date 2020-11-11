@@ -27,3 +27,9 @@ export const isMap = nameIs('Map')
 export const isSet = nameIs('Set')
 export const isSymbol = nameIs('Symbol')
 export const isPromise = (p) => p && (nameIs('Promise', p) || isFunc(p.then))
+
+export const shortID = () => {
+  const random = Math.random().toString(16)
+  const now = (+new Date()).toString(16)
+  return `${random.slice(random.length - 7)}-${now.slice(now.length - 7)}`
+}

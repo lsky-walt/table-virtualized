@@ -147,14 +147,15 @@ class TableConfig {
  */
   determineNeedToUpdate(nextConfig) {
     const {
-      rowCount, columnCount, rowHeight, columnWidth, width, height,
+      rowCount, columnCount, rowHeight, columnWidth, width, height, isWindowScroller,
     } = nextConfig
     if (rowCount !== this.config.rowCount
       || columnCount !== this.config.columnCount
       || rowHeight !== this.config.rowHeight
       || columnWidth !== this.config.columnWidth
       || width !== this.config.width
-      || height !== this.config.height) {
+      || height !== this.config.height
+      || isWindowScroller !== this.config.isWindowScroller) {
       return true
     }
     return false

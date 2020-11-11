@@ -35,6 +35,8 @@ module.exports = merge({}, {
   devServer: {
     host: process.env.HOST || '0.0.0.0',
     port: process.env.PORT || 9090,
+    historyApiFallback: true,
+    contentBase: [path.join(__dirname, './site')],
   },
 },
 base)

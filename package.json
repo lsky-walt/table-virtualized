@@ -1,6 +1,6 @@
 {
   "name": "@lsky/v-table",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./lib/index.js",
   "license": "MIT",
   "repository": "https://github.com/lsky-walt/table-virtualized",
@@ -42,6 +42,7 @@
     "less": "^3.12.2",
     "less-loader": "^6.2.0",
     "postcss-loader": "^3.0.0",
+    "react-router-dom": "^5.2.0",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
     "webpack-cli": "3.3.12",

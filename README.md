@@ -6,12 +6,12 @@
 
 ### npm
 ```shell
-$ npm i @lsky/vTable
+$ npm i @lsky/v-table
 ```
 
 ### yarn
 ```shell
-$ yarn add @lsky/vTable
+$ yarn add @lsky/v-table
 ```
 
 ### And you need to React and ReactDom
@@ -19,9 +19,124 @@ $ yarn add @lsky/vTable
 $ npm i react react-dom
 ```
 
+## Example
+
+### Basic usage
+
+```javascript
+import React from 'react'
+import VTable from '@lsky/v-table'
+
+class Index extends React.PureComponent {
+  tableRender({
+    rowIndex, columnIndex, key, style,
+  }) {
+    return (
+      <div key={key} style={style}>{`row-${rowIndex}-col-${columnIndex}`}</div>
+    )
+  }
+
+  render() {
+    return (
+      <VTable
+        width={860}
+        height={600}
+        rowHeight={40}
+        columnWidth={100}
+        columnCount={100}
+        rowCount={1000}
+        render={this.tableRender}
+      />
+    )
+  }
+}
+```
+
+### Wrap Adaptive
+
+> `Adaptive` component will adapt the container width and height, and return the width and height value.
+
+*Warning:* The parent element must have `relative` attr.
+
+```javascript
+import React from 'react'
+import VTable, { Adaptive } from '@lsky/v-table'
+
+class Index extends React.PureComponent {
+  tableRender({
+    rowIndex, columnIndex, key, style,
+  }) {
+    return (
+      <div key={key} style={style}>{`row-${rowIndex}-col-${columnIndex}`}</div>
+    )
+  }
+
+  render() {
+    return (
+      <Adaptive>
+        {({ width, height }) => (
+          <VTable
+            width={width}
+            height={height}
+            rowHeight={40}
+            columnWidth={100}
+            columnCount={100}
+            rowCount={1000}
+            render={this.tableRender}
+          />
+        )}
+      </Adaptive>
+    )
+  }
+}
+
+```
+
+### Wrap WindowScroller
+
+*Warning: * WindowScroller cannot be mixed with Adaptive.
+
+```javascript
+
+import React from 'react'
+import VTable, { WindowScroller } from '@lsky/v-table'
+
+class Index extends React.PureComponent {
+  tableRender({
+    rowIndex, columnIndex, key, style,
+  }) {
+    return (
+      <div key={key} style={style}>{`row-${rowIndex}-col-${columnIndex}`}</div>
+    )
+  }
+
+  render() {
+    return (
+      <WindowScroller>
+        {({ scrollTop, scrollLeft }) => (
+          <VTable
+            width={860}
+            height={600}
+            scrollTop={scrollTop}
+            scrollLeft={scrollLeft}
+            rowHeight={40}
+            columnWidth={100}
+            columnCount={100}
+            rowCount={1000}
+            render={this.tableRender}
+          />
+        )}
+      </WindowScroller>
+    )
+  }
+}
+
+```
+
+
 ## Component Props
 
-### vTable
+### VTable
 
 | attr | type | default value | required | desc |
 | --- | --- | --- | --- | --- |
