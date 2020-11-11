@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React from 'react'
-import { WindowScroller, Adaptive } from 'src'
+import { WindowScroller } from 'src'
 import clsx from 'clsx'
 import VT from './v-table'
 import styles from '../style.less'
