@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  registerScrollListener, unregisterScrollListener, getPostion, reRegister,
+  registerScrollListener, unregisterScrollListener, getPostion,
 } from 'src/tools/window-scroller'
 import { shortID } from 'src/tools/is'
 import clsx from 'clsx'

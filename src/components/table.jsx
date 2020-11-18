@@ -118,7 +118,7 @@ class Index extends React.Component {
     return (
       <div
         ref={this.bindContainer}
-        className={clsx('vTable-containner', styles['table-container'], !isWindowScroller && styles['table-container-auto'])}
+        className={clsx('vTable-container', styles['table-container'], !isWindowScroller && styles['table-container-auto'])}
         style={tableConfig.getContainerStyle()}
       >
         <div className="vTable-inner" style={innerContainerStyle}>{this.calcRenderChildren()}</div>
@@ -180,5 +180,7 @@ Index.propTypes = {
    */
   isWindowScroller: PropTypes.bool,
 }
+
+Index.displayName = 'VTable'
 
 export default Index
