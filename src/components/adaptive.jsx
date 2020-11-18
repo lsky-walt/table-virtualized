@@ -82,4 +82,6 @@ Index.propTypes = {
   children: PropTypes.func,
 }
 
+Index.displayName = 'Adaptive'
+
 export default Index

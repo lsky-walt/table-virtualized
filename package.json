@@ -1,16 +1,18 @@
 {
   "name": "@lsky/v-table",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./lib/index.js",
   "license": "MIT",
   "repository": "https://github.com/lsky-walt/table-virtualized",
   "author": "lsky_walt <lsky_walt@163.com>",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack/webpack.dev.config.js",
-    "build": "webpack --config ./webpack/webpack.prod.config.js"
+    "build": "webpack --config ./webpack/webpack.prod.config.js",
+    "e2e": "cypress open"
   },
   "files": [
-    "lib"
+    "lib",
+    "index.d.ts"
   ],
   "keywords": [
     "react-component",
@@ -30,10 +32,12 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.6.0",
+    "cypress": "^5.6.0",
     "ejs-loader": "^0.5.0",
     "eslint": "^7.7.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-import-resolver-webpack": "^0.12.2",
+    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
